@@ -5,7 +5,15 @@
 [js构造函数](https://www.cnblogs.com/honkerzh/p/10270624.html)
 
 ## js中call()、 apply()、 bind()
-[call()、 apply()、 bind()：都是用来重定义this這个对象的，调用一个对象的一个方法，用另一个对象替换当前对象](https://blog.csdn.net/weixin_42321292/article/details/82352997)
+[call()、 apply()、 bind()：都是用来重定义this這个对象的，调用一个对象的一个方法，用另一个对象替换当前对象。三个第一个参数都是this的指向对象；至于第二个，apply所有参数都是在一个数组，call和bind则不是](https://blog.csdn.net/weixin_42321292/article/details/82352997)
+
+## null和undefined
+null： Null类型，代表“空值”，代表一个空对象指针，使用typeof运算得到 “object”。undefined：Undefined类型，变量被声明了，但没有赋值时，就等于undefined。
+null转为数值时为0;undefined转为数值时为NaN。
+```
+console.log(null==undefined)//true
+console.log(null===undefined)//false
+```
 
 ## js继承
 [js继承：原型链继承、构造函数继承、实例继承、es6继承](https://zhuanlan.zhihu.com/p/37735247)
@@ -58,6 +66,46 @@ for (var i=0; i<=100; i++) {
 }
 console.log(sums)
 ```
+
+## 事件代理（事件委托）
+事件委托是指将事件绑定到目标元素的父元素上，利用冒泡机制触发该事件
+
+## 同源策略
+协议，域名，端口相同，同源策略是一种安全协议。
+
+## get、post区别
+> 1. get传参方式是通过地址栏URL传递，psot将参数存放在HTTP的包体内
+> 2. get传递数据是通过URL进行传递，有长度限制
+
+## 跨域解决
+> 1. jsonp：动态插入script标签，通过script标签引入一个js文件，这个js文件载入成功后会执行我们在url参数中指定的函数，并且会把我们需要的json数据作为参数传入。
+> 2. vue跨域解决：proxyTable：target为后端请求地址，pathRewrite重写地址。
+
+## 创建ajax过程
+> 创建XMLHttpRequest对象、创建一个新的HTTP请求,并指定该HTTP请求的方法、URL及验证信息、
+> 设置响应HTTP请求状态变化的函数、发送HTTP请求、获取异步调用返回的数据、页面数据渲染。
+
+## 一个页面从输入 URL 到页面加载显示完成，这个过程中都发生了什么
+> 浏览器地址栏输入url；浏览器会先查看缓存，存在的话直接显示；不存在的话，会先DNS解析获取IP，然后向服务器发起TCP连接，进行tcp三次握手；握手成功后，浏览器向服务器
+> 发送http请求；服务器返回数据；页面接收数据，进行页面数据渲染。
+```
+三次握手：浏览器向服务器发送想要连接这个请求（我想认识你）;服务器返回同意连接的信号（可以啊）；浏览器接收到信号后，发送确认信号。
+```
+
+## 前端安全性
+> 1. 使用token
+> 2. 前端信息加密
+
+## 性能优化
+> 1. 图片懒加载
+> 2. 图标使用雪碧图
+> 3. 样式表放在页面顶部，js文件放在底部。尽量减少table（table会等其内容加载完才会显示）
+> 4. 减少dom操作，减少http请求。
+
+## sessionStorage、localStorage、cookie
+> 1. sessionStorage用于存储的数据只在当前会话中存在，会话结束数据销毁；
+> 2. localStorage持久化的本地存储，除非主动删除数据，否则数据是永远不会过期的；
+> 3. cookie可设置过期时间，有大小限制
 
 ## js常用方法
 1. slice()：方法从已有的数组中返回选定的元素；提取字符串的某个部分，并以新的字符串返回被提取的部分。不会改变原始数组。
@@ -112,6 +160,7 @@ replaceChild
 ```
 父关系：parentNode 
 子关系：children、childNodes、firstChild、lastChild 
+遍历A节点的父节点下的所有子节点：document.getElementById("a").parentNode.children
 ```
 7. 元素属性型API
 ```
@@ -289,3 +338,46 @@ state存储数据；getter获取数据；mutation同步修改数据(commit())；
 > @keyframes 规则和animation
 1. animation：规定动画属性，比如定义动画的名称和时长。
 2. @keyframes：用于创建动画
+
+## css
+1. 盒模型：由里向外content,padding,border,margin。分为两种：
+> 1. IE盒子模型：width表示content+padding+border这三个部分的宽度
+> 2. 标准盒子模型（W3C盒子模型）：width指content部分的宽度
+> ```
+> box-sizing: content-box; 是W3C盒子模型
+> box-sizing: border-box; 是IE盒子模型
+> ```
+
+2. 清除浮动
+> 1. 在最后一个浮动标签后，新加一个标签，给其设置clear：both
+> 2. 父元素添加overflow:hidden
+> 3. 添加伪元素（不是伪类）
+> ```
+> .clearfix:after{/*伪元素是行内元素 正常浏览器清除浮动方法*/
+>		content: "";
+>		display: block;
+>		height: 0;
+>		clear:both;
+>		visibility: hidden;
+>	}
+>  .clearfix{
+>	    *zoom: 1;/*ie6清除浮动的方式 *号只有IE6-IE7执行，其他浏览器不执行*/
+>  }
+> ```
+
+3. css3新特性
+圆角（border-radius），阴影（box-shadow），对文字加特效（text-shadow、），
+线性渐变（gradient），旋转（transform）
+
+4. h5新特性
+新增标签header,nav,footer等；音频、视频API(audio,video)；画布canvas；localStorage、sessionStorage ；
+
+## 常见兼容性问题
+1. 浏览器默认的margin和padding不同。解决：*{margin:0;padding:0;}
+2. ios键盘唤起，键盘收起以后页面不归位
+```
+document.body.addEventListener('focusout', () => { // 去除ios弹出输入框页面上移
+　window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
+})
+```
+3. 移动端自适应：引用淘宝的适配方案flexible；rem布局（rem原理：计算是相对于根元素字体大小，其本质是等比缩放，一般是基于宽度）
