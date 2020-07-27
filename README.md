@@ -390,6 +390,79 @@ state存储数据；getter获取数据；mutation同步修改数据(commit())；
 4、$refs、$parent、$children
 父组件访问子组件方法或数据：this.$refs.child
 ```
+8. vue路由
+```
+hash模式：依靠的是onhashchange()事件去监听location.hash的改变。
+比如这个 URL：http://www.aaa.com/#/hello，hash 的值为 #/hello。
+它的特点在于：hash 虽然出现在 URL 中，但不会被包括在 HTTP 请求中，对后端完全没有影响，因此改变 hash 不会重新加载页面。
+```
+```
+history模式：相对hash而言，不会显示#号，但是需要服务器端配置
+```
+9. $route和$router的区别
+```
+$route是路由信息对象，包括path、params、query、meta、name等路由信息参数，可以通过$route来获取当前路由的各种参数
+$router是路由实例对象，包含的是方法以及配置属性
+```
+10. assets和static/public的区别
+```
+在assets目录下的静态资源会被webpack解析成资源模块依赖，在项目打包的时候会随着项目一起打包，
+而在static/public目录下的静态资源不会被解析
+```
+11. vue-router有哪些组件
+```
+router-link、router-view、keep-alive
+```
+12. 路由传参
+```
+name+params：this.$route.params.id
+path+query：this.$route.query.id
+router-link :to="{ name: 'news', params: { userId: 1111}}"
+在path中添加/:id来对应$router.push中path携带的参数：this.$route.params.id
+{
+  path: '/particulars/:id',
+  name: 'particulars',
+  component: particulars
+}
+this.$router.push({
+  path: `/particulars/${id}`,
+})
+```
+13. active-class
+```
+active-class 属于vue-router的样式方法，当routerlink标签被点击时将会应用这个样式
+```
+14. vue动态路由
+```
+使用动态路径参数，在path中添加/:id
+{
+  path: /user/:id
+  component: User
+}
+这会是访问 user 目录下的所有文件，当匹配到 /user 下的任意路由时，参数值会被设置到 this.$route.params 下。
+了解：
+后端配置路由：beforeEach、addRoutes、缓存实现：beforeEach进行路由拦截，先判断缓存中是否有路由，如果有就正常路由跳转；
+如果没有，就调接口获取路由，然后通过addRoutes动态添加路由并放入缓存中，之后进行路由跳转。
+```
+15. vue-router导航钩子
+```
+全局导航钩子：beforeEach(to、from、next)、afterEach(to、from)
+单个路由独享的：beforeEnter(to、from、next)
+组件内的导航钩子：beforeRouteEnter、beforeRouteUpdate、beforeRouteLeave：都有to, from, next三个参数
+```
+16. 路由懒加载的三种方式
+```
+一、vue异步组件技术 ==== 异步加载：这种情况下一个组件生成一个js文件
+component: resolve => require(['@/components/home'],resolve)
+二、使用import：每个组件打包成一个js文件
+const Home = () => import('@/components/home')
+{
+  path: '/about',
+  component: About
+}
+三、webpack提供的require.ensure() ：了解即可
+component: r => require.ensure([], () => r(require('@/components/home')), 'demo')
+```
 
 ## css3动画
 > @keyframes 规则和animation
