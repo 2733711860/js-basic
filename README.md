@@ -1,11 +1,26 @@
 ## js的原型和原型链
 [js的原型和原型链](https://www.jianshu.com/p/be7c95714586)
+```
+每一个JavaScript对象(null除外)在创建的时候就会与之关联另一个对象，这个对象就是我们所说的原型，
+每一个对象都会从原型"继承"属性。每个原型都有一个 constructor 属性指向关联的构造函数 实例原型指向构造函数
+```
 
 ## js构造函数
 [js构造函数](https://www.cnblogs.com/honkerzh/p/10270624.html)
+```
+通过 new 函数名 来实例化对象的函数叫构造函数。任何的函数都可以作为构造函数存在。
+构造函数的主要 功能为 初始化对象
+
+```
+
 
 ## js中call()、 apply()、 bind()
 [call()、 apply()、 bind()：都是用来重定义this這个对象的，调用一个对象的一个方法，用另一个对象替换当前对象。三个第一个参数都是this的指向对象；至于第二个，apply所有参数都是在一个数组，call和bind则不是](https://blog.csdn.net/weixin_42321292/article/details/82352997)
+```
+B.apply(A, arguments);即A对象应用B对象的方法
+B.call(A, args1,args2);即A对象调用B对象的方法
+B.bind(A, args1,args2)();即A对象调用B对象的方法，bind除了返回是函数以外，它的参数和call一样。
+```
 
 ## null和undefined
 null： Null类型，代表“空值”，代表一个空对象指针，使用typeof运算得到 “object”。undefined：Undefined类型，变量被声明了，但没有赋值时，就等于undefined。
@@ -17,6 +32,48 @@ console.log(null===undefined)//false
 
 ## js继承
 [js继承：原型链继承、构造函数继承、实例继承、es6继承](https://zhuanlan.zhihu.com/p/37735247)
+1. 原型链继承
+```
+function Woman(){ 
+}
+Woman.prototype= new People();
+Woman.prototype.name = 'haixia';
+let womanObj = new Woman();
+```
+2. 构造函数继承(call, apply, bind)
+```
+function Woman(name){
+ //继承了People
+  People.call(this); //People.call(this，'wangxiaoxia'); 
+  this.name = name || 'renbo'
+}
+let womanObj = new Woman();
+```
+3. class类继承(es6继承是使用关键字先创建父类的实例对象this，最后在子类class中修改this)
+```
+class People{
+  constructor(name='wang',age='27'){
+    this.name = name;
+    this.age = age;
+  }
+  eat(){
+    console.log(`${this.name} ${this.age} eat food`)
+  }
+}
+//继承父类
+class Woman extends People{ 
+   constructor(name = 'ren',age = '27'){ 
+     //继承父类属性
+     super(name, age); 
+   } 
+    eat(){ 
+     //继承父类方法
+      super.eat() 
+    } 
+} 
+let wonmanObj=new Woman('xiaoxiami'); 
+wonmanObj.eat();
+```
 
 ## js数据类型
 ```
