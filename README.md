@@ -2,7 +2,17 @@
 [js的原型和原型链](https://www.jianshu.com/p/be7c95714586)
 ```
 每一个JavaScript对象(null除外)在创建的时候就会与之关联另一个对象，这个对象就是我们所说的原型，
-每一个对象都会从原型"继承"属性。每个原型都有一个 constructor 属性指向关联的构造函数 实例原型指向构造函数
+每一个对象都会从原型"继承"属性。每个原型都有一个 constructor 属性指向关联的构造函数 实例原型指向构造函数。
+function Person(first, last, age, eyecolor) {
+  this.firstName = first;
+  this.lastName = last;
+  this.age = age;
+  this.eyeColor = eyecolor;
+}
+Person.prototype.nationality = "English";
+Person.prototype.name = function() {
+  return this.firstName + " " + this.lastName;
+};
 ```
 
 ## js构造函数
@@ -10,7 +20,6 @@
 ```
 通过 new 函数名 来实例化对象的函数叫构造函数。任何的函数都可以作为构造函数存在。
 构造函数的主要 功能为 初始化对象
-
 ```
 
 
@@ -79,6 +88,10 @@ wonmanObj.eat();
 ```
 js常用的基本数据类型包括undefined、null、number、boolean、string、Symbol。Symbol 是 ES6 引入了一种新的原始数据类型，表示独一无二的值。
 引用数据类型：对象(Object)、数组(Array)、函数(Function)。
+获取js数据类型：
+typeof（只有原始数据类型）
+Object.prototype.toString.call(str)
+myArray.constructor.toString().indexOf("Array")
 ```
 
 ## js类型转换
@@ -261,7 +274,7 @@ $(selector).removeAttr(class);
 ## es6语法
 [es6语法](http://caibaojian.com/es6/string.html)
 
-## es6扩展运算符...
+## es6扩展运算符超引用...
 > 返回的是每一项：var args = [0, 1, 2]  ，  ...args为0， 1， 2， [...args]为[0, 1, 2]
 
 ## es6 promise
@@ -295,9 +308,6 @@ let intersect = new Set([...a].filter(x => b.has(x)));
 let difference = new Set([...a].filter(x => !b.has(x)));
 // Set {1}
 ```
-
-## es6 新的数据结构Map
-1. Object传统上只能用字符串当作键，Map不是。
 
 ## es6 async
 1. async函数返回一个Promise对象。

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style>
+			.a{
+					width: 0;
+					height: 0;
+					border-width: 50px;
+					border-style: solid;
+					border-color: transparent #0099CC transparent transparent;
+					/* transform: rotate(90deg); /*顺时针旋转90°*/ */
+			 }
+			 .aniImg{
+				 width: 100px;
+				 height: 100px;
+				 border-radius: 100%;
+				 transition:All 0.4s ease-in-out;
+			 }
+			 .aniImg:hover{
+				 transform:rotate(360deg) scale(1.2);
+			 }
+		</style>
+	</head>
+	<body>
+		<div class="a"></div>
+		
+		<img src="img/2.jpg" class="aniImg" />
+		
+		<script src="new_file.js"></script>
+	</body>
+</html>
