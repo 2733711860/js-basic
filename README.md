@@ -86,6 +86,20 @@ let wonmanObj=new Woman('xiaoxiami');
 wonmanObj.eat();
 ```
 
+## margin塌陷合并
+```
+兄弟元素：实际取的是margin较大的。解决办法：只给一个元素加margin。
+父子元素：子元素margin时，当父元素没有设置内边距或边框,以及触发BFC时,如果子元素的值大于父元素时，它会带着父元素一起偏移。
+					解决：BFC解决（将父元素设置成块级格式化上下文）：overflow：hidden;(触发BFC：float，absolute/fixed，inline-block，overflow：除了visible以外的值)
+```
+
+## position
+```
+position: relative;相对定位：不会使元素脱离文档流，相对于自身原本位置进行偏移
+position: absolute;绝对定位：使元素完全脱离文档流，相对于最近一个有定位的父元素偏移
+position: fixed;固定定位：相对于浏览器窗口进行定位
+```
+
 ## js数据类型
 ```
 js常用的基本数据类型包括undefined、null、number、boolean、string、Symbol。Symbol 是 ES6 引入了一种新的原始数据类型，表示独一无二的值。
@@ -577,3 +591,9 @@ document.body.addEventListener('focusout', () => { // 去除ios弹出输入框�
 })
 ```
 3. 移动端自适应：引用淘宝的适配方案flexible；rem布局（rem原理：计算是相对于根元素字体大小，其本质是等比缩放，一般是基于宽度）
+
+## 微信公众号获取openid
+```
+1、先获取code，通过自定义的路径（路径包括appid和重定向地址）获取。先跳转自定义路径，之后页面自动到重定向到新的地址，这个地址url后跟着code。
+2、根据code获取openId：调腾讯接口，把appid、appsecret、code三个参数传过去。
+```
