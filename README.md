@@ -3,6 +3,8 @@
 ```
 每一个JavaScript对象(null除外)在创建的时候就会与之关联另一个对象，这个对象就是我们所说的原型，
 每一个对象都会从原型"继承"属性。每个原型都有一个 constructor 属性指向关联的构造函数 实例原型指向构造函数。
+声明一个函数时，浏览器会自动创建一个对象，而且每个函数都会有一个属性 prototype 指向了这个对象，对象就叫做原型对象。
+每个对象都会在内部生成一个proto 属性，当我们访问一个对象属性时，如果这个对象不存在就回去proto 指向的对象里面找，一层一层找下去，这就是javascript原型链
 function Person(first, last, age, eyecolor) {
   this.firstName = first;
   this.lastName = last;
@@ -43,7 +45,7 @@ console.log(null===undefined)//false
 [js继承：原型链继承、构造函数继承、实例继承、es6继承](https://zhuanlan.zhihu.com/p/37735247)
 1. 原型链继承
 ```
-function Woman(){ 
+function Woman(){
 }
 Woman.prototype= new People();
 Woman.prototype.name = 'haixia';
@@ -53,7 +55,7 @@ let womanObj = new Woman();
 ```
 function Woman(name){
  //继承了People
-  People.call(this); //People.call(this，'wangxiaoxia'); 
+  People.call(this); //People.call(this，'wangxiaoxia');
   this.name = name || 'renbo'
 }
 let womanObj = new Woman();
@@ -70,17 +72,17 @@ class People{
   }
 }
 //继承父类
-class Woman extends People{ 
-   constructor(name = 'ren',age = '27'){ 
+class Woman extends People{
+   constructor(name = 'ren',age = '27'){
      //继承父类属性
-     super(name, age); 
-   } 
-    eat(){ 
+     super(name, age);
+   }
+    eat(){
      //继承父类方法
-      super.eat() 
-    } 
-} 
-let wonmanObj=new Woman('xiaoxiami'); 
+      super.eat()
+    }
+}
+let wonmanObj=new Woman('xiaoxiami');
 wonmanObj.eat();
 ```
 
@@ -92,6 +94,7 @@ js常用的基本数据类型包括undefined、null、number、boolean、string�
 typeof（只有原始数据类型）
 Object.prototype.toString.call(str)
 myArray.constructor.toString().indexOf("Array")
+arr instanceof Array // 用来判断 A 是否为 B 的实例，返回true或false
 ```
 
 ## js类型转换
@@ -201,22 +204,22 @@ document.querySelectorAll ：返回一个 NodeList
 ```
 2. createElement创建节点
 ```
-var elem = document.createElement("div");  
-elem.id = 'haorooms';  
-elem.style = 'color: red';  
-elem.innerHTML = '我是新创建的节点';  
-document.body.appendChild(elem);  
+var elem = document.createElement("div");
+elem.id = 'haorooms';
+elem.style = 'color: red';
+elem.innerHTML = '我是新创建的节点';
+document.body.appendChild(elem);
 ```
 3. createTextNode创建文本节点
 ```
-var node = document.createTextNode("我是文本节点");  
-document.body.appendChild(node); 
+var node = document.createTextNode("我是文本节点");
+document.body.appendChild(node);
 ```
 4. cloneNode 克隆一个节点：node.cloneNode(true/false) ，它接收一个bool参数，用来表示是否复制子元素。
 ```
-var from = document.getElementById("test");  
-var clone = from.cloneNode(true);  
-clone.id = "test2";  
+var from = document.getElementById("test");
+var clone = from.cloneNode(true);
+clone.id = "test2";
 document.body.appendChild(clone);
 ```
 5. 节点修改
@@ -228,13 +231,13 @@ replaceChild
 ```
 6. 节点关系
 ```
-父关系：parentNode 
-子关系：children、childNodes、firstChild、lastChild 
+父关系：parentNode
+子关系：children、childNodes、firstChild、lastChild
 遍历A节点的父节点下的所有子节点：document.getElementById("a").parentNode.children
 ```
 7. 元素属性型API
 ```
-setAttribute 给元素设置属性：element.setAttribute("type", "button"); 
+setAttribute 给元素设置属性：element.setAttribute("type", "button");
 getAttribute 返回属性值： element.getAttribute("id")；
 removeAttribute
 hasAttribute：是否有属性
@@ -269,6 +272,59 @@ $(selector).addClass(class);
 $(selector).removeClass(class);
 $(selector).toggleClass(class);
 $(selector).removeAttr(class);
+```
+3. window.onload与$(document).ready()区别
+```
+$(document).ready()：是在 html 所有标签(DOM)都加载之后，就会去执行，可执行多次；
+window.onload：等到所有内容，包括外部图片之类的文件加载完后，才会执行，只可一次，第二次会覆盖第一次
+```
+4. jquery选择器
+```
+id 选择器、class 选择器、元素选择器、层次选择器
+```
+5. attr 和 prop 的区别
+```
+对于 HTML 元素本身就带有的固有属性，在处理时，使用 prop 方法.
+对于 HTML 元素我们自己自定义的 DOM 属性，在处理时，使用 attr 方法
+```
+6. jquery添加元素
+```
+append() - 在被选元素的结尾插入内容
+prepend() - 在被选元素的开头插入内容
+after() - 在被选元素之后插入内容
+before() - 在被选元素之前插入内容
+```
+7. jquery删除元素
+```
+$("#div1").remove();删除被选元素（及其子元素）
+$("p").remove(".italic");删除被选元素（及其子元素），除了class为italic的
+$("#div1").empty();删除被选元素的子元素
+```
+8. jquery遍历
+```
+1. 祖先
+parent() 方法返回被选元素的直接父元素。
+parents() 方法返回被选元素的所有祖先元素，它一路向上直到文档的根元素 (<html>)
+$("span").parents("ul");返回所有 <span> 元素的所有祖先，并且它是 <ul> 元素
+
+2. 后代
+$("div").children();方法返回被选元素的所有直接子元素。
+$("div").children("p.1") 返回类名为 "1" 的所有 <p> 元素，并且它们是 <div> 的直接子元素
+$("div").find("span") 返回属于 <div> 后代的所有 <span> 元素
+$("div").find("*") 返回 <div> 的所有后代
+
+3. 同胞
+siblings() 方法返回被选元素的所有同胞元素
+next() 、prev()方法返回被选元素的下（上）一个同胞元素
+nextAll()、prevAll() 方法返回被选元素的所有跟随（前面）的同胞元素
+nextUntil()、prevUntil() 返回介于两个给定参数之间的所有跟随的同胞元素
+
+4. 遍历
+first()、last()、eq()、filter()、not()
+```
+9. $ 符号是 jQuery 的简写
+```
+var jq = $.noConflict() // 可用jq代替$
 ```
 
 ## es6语法
@@ -356,9 +412,9 @@ export {n as m};
 ## vue
 1. MVVM是Model-View-ViewModel的简写，模型-视图-视图模型。【模型】指的是后端传递的数据。【视图】指的是所看到的页面。【视图模型】mvvm模式的核心，它有两个方向：一是将【模型】转化成【视图】，即将后端传递的数据转化成所看到的页面。实现的方式是：数据绑定。二是将【视图】转化成【模型】，即将所看到的页面转化成后端的数据。实现的方式是：DOM 事件监听。这两个方向都实现的，我们称之为数据的双向绑定。
 2. vue的双向绑定是由数据劫持结合发布者－订阅者模式实现的。通过Object.defineProperty()来劫持对象属性的setter和getter，在数据变动的时候发布消息给订阅者，触发相应的监听回调。
-* 数据监听器Observer，能够对数据对象的所有属性进行监听，如有变动可拿到最新值并通知订阅者
-* 指令解析器Compile，对每个元素节点的指令进行扫描和解析，根据指令模板替换数据，以及绑定相应的更新函数
-* Watcher，作为连接Observer和Compile的桥梁，能够订阅并收到每个属性变动的通知，执行指令绑定的相应回调函数，从而更新视图
+* 数据监听器Observer，对每个vue中的data中定义的属性循环用Object.defineProperty()实现数据劫持
+* 通过Compile来解析编译模板指令（vue中是用来解析 {{}}）
+* Watcher，作为连接Observer和Compile的桥梁，达到数据变化 —>视图更新；视图交互变化（input）—>数据model变更双向绑定效果
 3. vue优势：Vue很灵活，他们的库可以和各种包搭配。用于状态管理的 Vuex、用于应用程序 URL 管理的 Vue Router、Vue 服务器端渲染、组件化开发、数据双向绑定。
 4. Vue.nextTick(callback)：当数据发生变化，更新后执行回调。
 5. Vue.$nextTick(callback)：当dom发生变化，更新后执行的回调。
@@ -379,7 +435,7 @@ directives:{
 	focus:{
 		inserted: function (el) {
 			el.focus()
-		}      
+		}
 	}
 }
 ```
