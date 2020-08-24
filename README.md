@@ -33,6 +33,19 @@ B.call(A, args1,args2);即A对象调用B对象的方法
 B.bind(A, args1,args2)();即A对象调用B对象的方法，bind除了返回是函数以外，它的参数和call一样。
 ```
 
+## js new一个对象的过程
+```
+function A(name) {
+	this.name = name
+}
+var b = new A('zhangsan')
+1、创建一个对象 b；
+2、新建对象会执行prototype链接：b._proto_ = A.prototype；
+3、新对象会和函数调用的this绑定起来：A.call(b, 'zhangsan')；
+4、执行构造函数中的代码：b.name；
+5、如果函数没有返回值，则自动返回这个新对象。
+```
+
 ## null和undefined
 null： Null类型，代表“空值”，代表一个空对象指针，使用typeof运算得到 “object”。undefined：Undefined类型，变量被声明了，但没有赋值时，就等于undefined。
 null转为数值时为0;undefined转为数值时为NaN。
@@ -50,6 +63,10 @@ function Woman(){
 Woman.prototype= new People();
 Woman.prototype.name = 'haixia';
 let womanObj = new Woman();
+
+function Aoo(){}
+function Foo(){}
+Foo.prototype = new Aoo();//JavaScript 原型继承
 ```
 2. 构造函数继承(call, apply, bind)
 ```
@@ -108,7 +125,8 @@ js常用的基本数据类型包括undefined、null、number、boolean、string�
 typeof（只有原始数据类型）
 Object.prototype.toString.call(str)
 myArray.constructor.toString().indexOf("Array")
-arr instanceof Array // 用来判断 A 是否为 B 的实例，返回true或false
+arr instanceof Array // 用来判断 A 是否为 B 的实例，返回true或false；instanceof 只能用来判断两个对象是否属于实例关系， 而不能判断一个对象实例具体属于哪种类型
+Array.isArray(arr)
 ```
 
 ## js类型转换
@@ -543,6 +561,21 @@ const Home = () => import('@/components/home')
 三、webpack提供的require.ensure() ：了解即可
 component: r => require.ensure([], () => r(require('@/components/home')), 'demo')
 ```
+17. 虚拟dom
+```
+虚拟dom：将真实的DOM的数据抽取出来，以对象的形式模拟树形结构。
+当虚拟dom某个节点数据发生变化时，会生成一个新的Vnode，然后新旧进行比较，发现不一样的地方就直接修改在真实的DOM上，。
+diff算法就是调用patch函数，比较新旧节点（同级节点比较），一边比较一边给真实的DOM打补丁。
+```
+18. vue中 key 值的作用
+```
+使用key来给每个节点做一个唯一标识，主要是为了高效的更新虚拟DOM
+```
+19. Vue 组件中 data 为什么必须是函数
+```
+在 new Vue() 中，data 是可以作为一个对象进行操作的，然而在 component 中，data 只能以函数的形式存在.
+当data选项是一个函数的时候，每个实例可以维护一份被返回对象的独立的拷贝，这样各个实例中的data不会相互影响，是独立的
+```
 
 ## css3动画
 > @keyframes 规则和animation
@@ -596,4 +629,10 @@ document.body.addEventListener('focusout', () => { // 去除ios弹出输入框�
 ```
 1、先获取code，通过自定义的路径（路径包括appid和重定向地址）获取。先跳转自定义路径，之后页面自动到重定向到新的地址，这个地址url后跟着code。
 2、根据code获取openId：调腾讯接口，把appid、appsecret、code三个参数传过去。
+```
+
+## 深拷贝与浅拷贝
+```
+浅拷贝：只复制指向某个对象的指针，而不复制这个对象本身，新旧对象还是共享同一内存。改变拷贝的，原对象也会变。Object.assign({}, obj)
+深拷贝：JSON.parse(JSON.stringify(arr))
 ```
